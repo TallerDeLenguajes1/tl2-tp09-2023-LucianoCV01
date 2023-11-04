@@ -70,7 +70,7 @@ namespace EspacioRepositorios
             SQLiteConnection connection = new SQLiteConnection(cadenaConexion);
             var usuario = new Usuario();
             SQLiteCommand command = connection.CreateCommand();
-            command.CommandText = $"SELECT * FROM Usuario WHERE id = @id";
+            command.CommandText = $"SELECT * FROM Usuario WHERE id_usuario = @id";
             command.Parameters.Add(new SQLiteParameter("@id", id));
             connection.Open();
             using (SQLiteDataReader reader = command.ExecuteReader())
