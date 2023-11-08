@@ -7,7 +7,25 @@ namespace EspacioRepositorios
     {
         private string cadenaConexion = "Data Source=DB/TP08-CosentinoLuciano.db;Cache=Shared";
 
-        // public Tablero Create();
+        public void Create(Tablero tablero) // no recibe id_usuario por ser FK
+        {
+            var query = $"INSERT INTO Tablero (id_usuario_propietario, nombre, descripcion) VALUES (@usuario, @name, @descripcion)";
+            using (SQLiteConnection connection = new SQLiteConnection(cadenaConexion))
+            {
+
+                connection.Open();
+                var command = new SQLiteCommand(query, connection);
+
+                command.Parameters.Add(new SQLiteParameter("@usuario", tablero.IdUsuarioPropietario));
+                command.Parameters.Add(new SQLiteParameter("@name", tablero.Nombre));
+                command.Parameters.Add(new SQLiteParameter("@descripcion", tablero.Descripcion));
+
+
+                command.ExecuteNonQuery();
+
+                connection.Close();
+            }
+        }
         public void Update(int id, Tablero tablero)
         {
             var query = $"UPDATE Tablero SET id_usuario_propietario = (@propietario), nombre = (@name), descripcion = (@descripcion) WHERE id_tablero = (@id);";
